@@ -1,7 +1,7 @@
 {
   "name": "homebridge-liveboxtvuhd",
   "displayName": "Orange Livebox TV UHD",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Homebridge plugin exposing the Orange Livebox TV UHD set-top box (France, Caribbean, Poland) to Apple HomeKit as a TV set-top box.",
   "license": "MIT",
   "main": "dist/index.js",

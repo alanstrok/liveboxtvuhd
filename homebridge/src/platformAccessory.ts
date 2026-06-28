@@ -5,11 +5,32 @@ import { Channel, Country, tunableChannels } from './channels';
 import { LiveboxClient } from './liveboxClient';
 
 /**
- * A HomeKit accessory may expose at most 100 services. Reserve a handful for
- * the Television, TelevisionSpeaker and AccessoryInformation services, leaving
- * this many for channel inputs.
+ * A HomeKit accessory may expose at most 100 services (Television,
+ * TelevisionSpeaker, AccessoryInformation and the HAP protocol service take a
+ * few, and iOS gets unreliable near the ceiling), so cap channel inputs with
+ * comfortable headroom. Curate the list via the "channels" option for a usable
+ * input picker.
  */
-const MAX_INPUT_SOURCES = 96;
+const MAX_INPUT_SOURCES = 90;
+
+/**
+ * Make a channel name acceptable as a HomeKit name characteristic. HAP v2
+ * rejects names that don't start/end with a letter or number, or that contain
+ * symbols like '+', '/' or ':' - which would otherwise prevent the whole
+ * accessory from being added to the Home app. e.g. "LIGUE 1+" -> "LIGUE 1 Plus",
+ * "PUBLIC SENAT 24/24" -> "PUBLIC SENAT 24 24".
+ */
+export function sanitizeName(raw: string): string {
+  const cleaned = raw
+    .replace(/\+/g, ' Plus ')
+    .replace(/&/g, ' and ')
+    .replace(/[^A-Za-z0-9 '.,-]/g, ' ') // drop '/', ':', and other symbols
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/^[^A-Za-z0-9]+/, '') // must start with a letter/number
+    .replace(/[^A-Za-z0-9]+$/, ''); // must end with a letter/number
+  return cleaned.length > 0 ? cleaned : 'Channel';
+}
 
 export interface DeviceConfig {
   name: string;
@@ -117,12 +138,13 @@ export class LiveboxSetTopBox {
     channels.forEach((chan, i) => {
       const identifier = i + 1;
       const subtype = `input-${identifier}`;
+      const displayName = sanitizeName(chan.name);
       const input =
         this.accessory.getServiceById(Service.InputSource, subtype) ||
-        this.accessory.addService(Service.InputSource, chan.name, subtype);
+        this.accessory.addService(Service.InputSource, displayName, subtype);
       input
         .setCharacteristic(Characteristic.Identifier, identifier)
-        .setCharacteristic(Characteristic.ConfiguredName, chan.name)
+        .setCharacteristic(Characteristic.ConfiguredName, displayName)
         .setCharacteristic(
           Characteristic.IsConfigured,
           Characteristic.IsConfigured.CONFIGURED,
