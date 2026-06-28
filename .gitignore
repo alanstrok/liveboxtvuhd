@@ -6,3 +6,8 @@ homekit/__pycache__/*
 homekit/config.yaml
 *.state
 *-homekit.state
+
+# Homebridge plugin build artifacts
+homebridge/node_modules/
+homebridge/dist/
+homebridge/*.tgz

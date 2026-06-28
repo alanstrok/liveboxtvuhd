@@ -1,0 +1,45 @@
+{
+  "name": "homebridge-liveboxtvuhd",
+  "displayName": "Orange Livebox TV UHD",
+  "version": "1.0.0",
+  "description": "Homebridge plugin exposing the Orange Livebox TV UHD set-top box (France, Caribbean, Poland) to Apple HomeKit as a TV set-top box.",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "engines": {
+    "node": ">=18.15.0",
+    "homebridge": ">=1.6.0 || ^2.0.0-beta.0"
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build",
+    "gen-channels": "python3 ../tools/gen-channels.py > src/channels.ts"
+  },
+  "files": [
+    "dist",
+    "config.schema.json",
+    "README.md"
+  ],
+  "keywords": [
+    "homebridge-plugin",
+    "orange",
+    "livebox",
+    "tv",
+    "set-top-box",
+    "homekit"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alanstrok/liveboxtvuhd.git",
+    "directory": "homebridge"
+  },
+  "bugs": {
+    "url": "https://github.com/alanstrok/liveboxtvuhd/issues"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "homebridge": "^1.8.0",
+    "typescript": "^5.4.0"
+  }
+}

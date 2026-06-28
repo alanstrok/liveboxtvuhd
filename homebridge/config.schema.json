@@ -1,0 +1,112 @@
+{
+  "pluginAlias": "LiveboxTvUhd",
+  "pluginType": "platform",
+  "singular": true,
+  "headerDisplay": "Exposes one or more Orange Livebox TV UHD set-top boxes to HomeKit. Each box appears as its own **TV Set-Top Box** accessory (published as an external accessory) — after saving and restarting Homebridge, add it in the Home app with your Homebridge PIN.",
+  "footerDisplay": "Tip: a country's full channel list is longer than HomeKit's ~96-input limit. Use the **Channels** field to expose just the channels you watch (by number or name).",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "title": "Platform Name",
+        "type": "string",
+        "default": "LiveboxTvUhd",
+        "required": true
+      },
+      "devices": {
+        "title": "Set-top boxes",
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "title": "Name",
+              "type": "string",
+              "default": "Livebox TV",
+              "required": true,
+              "description": "Shown in the Home app."
+            },
+            "host": {
+              "title": "Host / IP address",
+              "type": "string",
+              "required": true,
+              "format": "hostname",
+              "placeholder": "192.168.1.20"
+            },
+            "port": {
+              "title": "Port",
+              "type": "integer",
+              "default": 8080,
+              "required": false
+            },
+            "country": {
+              "title": "Country (channel list)",
+              "type": "string",
+              "default": "caraibe",
+              "required": true,
+              "oneOf": [
+                { "title": "France", "enum": ["france"] },
+                { "title": "Caribbean (Caraïbe)", "enum": ["caraibe"] },
+                { "title": "Poland", "enum": ["poland"] }
+              ]
+            },
+            "pollInterval": {
+              "title": "Poll interval (seconds)",
+              "type": "integer",
+              "default": 10,
+              "minimum": 3,
+              "required": false,
+              "description": "How often to refresh power/channel state from the box."
+            },
+            "timeout": {
+              "title": "Request timeout (seconds)",
+              "type": "integer",
+              "default": 3,
+              "minimum": 1,
+              "required": false
+            },
+            "channels": {
+              "title": "Channels",
+              "type": "array",
+              "required": false,
+              "description": "Optional. Channels to expose as HomeKit inputs, in order. Reference by channel number (index) or name. Leave empty to expose the full list (truncated to ~96).",
+              "items": {
+                "type": "string",
+                "title": "Channel (number or name)"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "layout": [
+    {
+      "key": "devices",
+      "type": "array",
+      "title": "Set-top boxes",
+      "buttonText": "Add a box",
+      "items": [
+        "devices[].name",
+        "devices[].host",
+        {
+          "type": "flex",
+          "flex-flow": "row wrap",
+          "items": ["devices[].country", "devices[].port"]
+        },
+        {
+          "type": "flex",
+          "flex-flow": "row wrap",
+          "items": ["devices[].pollInterval", "devices[].timeout"]
+        },
+        {
+          "key": "devices[].channels",
+          "type": "array",
+          "title": "Channels (optional)",
+          "buttonText": "Add a channel",
+          "items": ["devices[].channels[]"]
+        }
+      ]
+    }
+  ]
+}

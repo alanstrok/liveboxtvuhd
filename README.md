@@ -21,15 +21,21 @@ Two platform entities are available :
 
 ## Apple HomeKit (without Home Assistant)
 
-Want the box in the **Apple Home** app as a native **set-top box**? A standalone
-HomeKit bridge is included under [`homekit/`](homekit/). It reuses the same local
-control protocol and channel lists, pairs directly with Apple Home, and does not
-require Home Assistant. See [`homekit/README.md`](homekit/README.md).
+Want the box in the **Apple Home** app as a native **set-top box**? Two
+independent options are included — both reuse the same local control protocol
+and channel lists, and neither requires Home Assistant:
 
-```bash
-pip install -r homekit/requirements.txt
-python -m homekit.run --host 192.168.1.20 --country caraibe
-```
+- **Homebridge plugin** — [`homebridge/`](homebridge/). Installs into an
+  existing Homebridge instance (e.g. on Unraid), configured from the Homebridge
+  UI. See [`homebridge/README.md`](homebridge/README.md).
+- **Standalone bridge (HAP-python)** — [`homekit/`](homekit/). A small Python
+  app that pairs directly with Apple Home, no Homebridge needed. See
+  [`homekit/README.md`](homekit/README.md).
+
+  ```bash
+  pip install -r homekit/requirements.txt
+  python -m homekit.run --host 192.168.1.20 --country caraibe
+  ```
 
 ## Installation 
 
