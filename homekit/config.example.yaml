@@ -1,0 +1,38 @@
+# Example configuration for the Livebox TV UHD HomeKit bridge.
+# Copy to config.yaml and edit, then run:
+#   python -m homekit.run --config homekit/config.yaml
+
+# IP address or hostname of the Livebox / set-top box (required).
+host: 192.168.1.20
+
+# HTTP port of the box's remote-control API (default 8080).
+port: 8080
+
+# Channel list to use: france | caraibe | poland (default caraibe).
+country: caraibe
+
+# Name shown in the Apple Home app.
+name: Livebox TV
+
+# How often (seconds) to poll the box for power/channel state.
+poll_interval: 10
+
+# Port used by the HomeKit server on this host (default 51826).
+homekit_port: 51826
+
+# Optional fixed HomeKit setup code "XXX-XX-XXX".
+# Leave unset to have one generated and printed at first launch.
+# pincode: "123-45-678"
+
+# Optional: expose only specific channels as HomeKit inputs, in this order.
+# Reference channels by their "index" (string/number) or by name. This is the
+# recommended way to keep the input list short and useful — HomeKit allows at
+# most ~96 inputs per accessory, and the full channel list is much longer.
+# When omitted, the country's full tunable channel list is used (truncated).
+#
+# channels:
+#   - 1            # GUADELOUPE 1ERE
+#   - 11           # TF1
+#   - FRANCE 2
+#   - ARTE
+#   - BEIN SPORTS 1

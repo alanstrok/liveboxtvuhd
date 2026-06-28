@@ -1,0 +1,16 @@
+[Unit]
+Description=Orange Livebox TV UHD HomeKit bridge
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# Adjust User and paths to your installation.
+User=homekit
+WorkingDirectory=/opt/liveboxtvuhd
+ExecStart=/usr/bin/python3 -m homekit.run --config /opt/liveboxtvuhd/homekit/config.yaml --persist-file /var/lib/liveboxtv-homekit/livebox.state
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

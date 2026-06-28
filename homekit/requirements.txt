@@ -1,0 +1,7 @@
+HAP-python>=4.9.0
+requests>=2.25
+PyYAML>=5.4
+# Optional: show a scannable pairing QR code in the terminal
+pyqrcode>=1.2
+pypng>=0.0.20
+base36>=0.1.1

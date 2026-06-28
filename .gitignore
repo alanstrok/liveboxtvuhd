@@ -1,2 +1,8 @@
 custom_components/liveboxtvuhd/__pycache__/*
 custom_components/liveboxtvuhd/livebox-emulator.py
+
+# HomeKit bridge runtime artifacts
+homekit/__pycache__/*
+homekit/config.yaml
+*.state
+*-homekit.state

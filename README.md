@@ -19,6 +19,18 @@ Two platform entities are available :
 - media player entity to handle the features above
 - remote entity to bring additional controls
 
+## Apple HomeKit (without Home Assistant)
+
+Want the box in the **Apple Home** app as a native **set-top box**? A standalone
+HomeKit bridge is included under [`homekit/`](homekit/). It reuses the same local
+control protocol and channel lists, pairs directly with Apple Home, and does not
+require Home Assistant. See [`homekit/README.md`](homekit/README.md).
+
+```bash
+pip install -r homekit/requirements.txt
+python -m homekit.run --host 192.168.1.20 --country caraibe
+```
+
 ## Installation 
 
 **Recommanded**
